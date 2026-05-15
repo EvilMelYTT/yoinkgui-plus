@@ -6,18 +6,12 @@ import org.lwjgl.glfw.GLFW
 
 class MenuKeybind : Key {
 
-    override fun keyName(): String {
-        return "key.yoinkgui.position"
-    }
+    override fun keyName(): String = "key.yoinkgui-plus.position"
 
-    override fun key(): Int {
-        return GLFW.GLFW_KEY_M
-    }
+    override fun key(): Int = GLFW.GLFW_KEY_M
 
     override fun whenPressed() {
         val client = Minecraft.getInstance()
-
         client.setScreen(ButtonPositionScreen(client.screen))
     }
-
 }
