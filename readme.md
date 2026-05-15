@@ -1,5 +1,7 @@
 <div align="center">
 
+Built with .\gradlew stonecutterSwitchTo1.21.11 and .\gradlew :1.21.11:build --no-daemon
+
 # YoinkGUI
 
 [![Download on Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/c7fd18efdadd1c3f12ae56b49afd834640d2d797/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/yoinkgui)
