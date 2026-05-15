@@ -73,7 +73,20 @@ object Utils {
     fun sendChat(vararg messages: Component) {
         try {
             val mc = Minecraft.getInstance()
-            val action = Runnable { for (component in messages) { audience.sendMessage(component) } }
+            val action = Runnable {
+                for (component in messages) {
+                    try {
+                        audience.sendMessage(component)
+                    } catch (e: Exception) {
+                        // Fallback: strip click events and retry
+                        try {
+                            audience.sendMessage(component.clickEvent(null))
+                        } catch (e2: Exception) {
+                            LatestErrorLog.record(e2, "Error sending chat message after fallback")
+                        }
+                    }
+                }
+            }
             mc.execute(action)
         } catch (e: Exception) {
             LatestErrorLog.record(e, "Error sending chat message (MiniMessage)")
