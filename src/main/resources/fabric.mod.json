@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "id": "yoinkgui",
+  "id": "yoinkgui-plus",
   "version": "${version}",
-  "name": "YoinkGUI",
-  "description": "A Fabric mod that allows users to easily copy the name and lore of items from any GUI!",
-  "authors": [
-    "ThatOneDevil"
+  "name": "YoinkGUI Plus",
+  "description": "${mod_description}",  "authors": [
+    "ThatOneDevil",
+    "EvilMel"
   ],
   "contact": {
     "homepage": "https://modrinth.com/project/5j4oEPp2",
