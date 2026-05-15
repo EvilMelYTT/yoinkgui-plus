@@ -89,7 +89,8 @@ tasks.processResources {
         "version" to project.version,
         "mc" to mcDep,
         "yaclVersion" to yacl,
-        "modmenuVersion" to modMenu
+        "modmenuVersion" to modMenu,
+        "mod_description" to (findProperty("mod_description") ?: rootProject.property("mod_description")) as String
     )
 
     props.forEach(inputs::property)
@@ -177,5 +178,10 @@ publishMods {
         requires { slug.set("fabric-language-kotlin") }
         requires { slug.set("yacl") }
         requires { slug.set("modmenu") }
+    }
+}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
     }
 }
