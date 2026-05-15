@@ -4,10 +4,12 @@ import dev.isxander.yacl3.config.v3.JsonFileCodecConfig
 import dev.isxander.yacl3.config.v3.register
 import dev.isxander.yacl3.config.v3.value
 import me.thatonedevil.nbt.FormatOptions
+import me.thatonedevil.nbt.LoreRawMode
+import me.thatonedevil.nbt.SlotFormat
 import net.fabricmc.loader.api.FabricLoader
 
 open class YoinkGuiSettings() : JsonFileCodecConfig<YoinkGuiSettings>(
-    FabricLoader.getInstance().configDir.resolve("yoinkgui.json")
+    FabricLoader.getInstance().configDir.resolve("yoinkgui-plus.json")
 ) {
     val enableYoinkButton by register<Boolean>(default = true, BOOL)
     val enableSingleItemYoink by register<Boolean>(default = true, BOOL)
@@ -16,6 +18,7 @@ open class YoinkGuiSettings() : JsonFileCodecConfig<YoinkGuiSettings>(
     val buttonX by register<Int>(default = 40, INT)
     val buttonY by register<Int>(default = 35, INT)
     val debugMode by register<Boolean>(default = false, BOOL)
+    val enableUpdateNotices by register<Boolean>(default = true, BOOL)
 
     // parser options
     val formatOption by register<String>(default = FormatOptions.LEGACY.name, STRING)
@@ -24,6 +27,17 @@ open class YoinkGuiSettings() : JsonFileCodecConfig<YoinkGuiSettings>(
     val toggleStyleParser by register<Boolean>(default = true, BOOL)
     val toggleShadowParser by register<Boolean>(default = true, BOOL)
     val toggleGradientParser by register<Boolean>(default = true, BOOL)
+
+    // slot display options
+    val slotFormat by register<String>(default = SlotFormat.ITEM_AND_SLOT.name, STRING)
+    val slotShowLabels by register<Boolean>(default = true, BOOL)
+
+    // lore raw output options
+    val loreShowRaw by register<Boolean>(default = true, BOOL)
+    val loreRawMode by register<String>(default = LoreRawMode.RAW_ONLY.name, STRING)
+
+    // output file options
+    val clickOpensFile by register<Boolean>(default = true, BOOL)
 
     val isFirstLaunch by register<Boolean>(default = true, BOOL)
     var hasJustLaunched = false
@@ -35,12 +49,18 @@ open class YoinkGuiSettings() : JsonFileCodecConfig<YoinkGuiSettings>(
         buttonX.value = settings.buttonX.value
         buttonY.value = settings.buttonY.value
         debugMode.value = settings.debugMode.value
+        enableUpdateNotices.value = settings.enableUpdateNotices.value
         formatOption.value = settings.formatOption.value
         includeRawNbt.value = settings.includeRawNbt.value
         toggleColorParser.value = settings.toggleColorParser.value
         toggleStyleParser.value = settings.toggleStyleParser.value
         toggleShadowParser.value = settings.toggleShadowParser.value
         toggleGradientParser.value = settings.toggleGradientParser.value
+        slotFormat.value = settings.slotFormat.value
+        slotShowLabels.value = settings.slotShowLabels.value
+        loreShowRaw.value = settings.loreShowRaw.value
+        loreRawMode.value = settings.loreRawMode.value
+        clickOpensFile.value = settings.clickOpensFile.value
     }
 
     companion object : YoinkGuiSettings() {

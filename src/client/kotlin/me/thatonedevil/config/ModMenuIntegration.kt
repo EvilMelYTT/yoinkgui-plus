@@ -10,6 +10,8 @@ import me.thatonedevil.config.YaclConfigHelper.booleanOption
 import me.thatonedevil.config.YaclConfigHelper.enumOptionString
 import me.thatonedevil.nbt.ComponentValueRegistry.refreshHandlers
 import me.thatonedevil.nbt.FormatOptions
+import me.thatonedevil.nbt.LoreRawMode
+import me.thatonedevil.nbt.SlotFormat
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
@@ -24,13 +26,12 @@ class ModMenuIntegration : ModMenuApi {
                 YoinkGuiSettings.saveToFile()
                 refreshHandlers()
             }
-            .title(Component.nullToEmpty("YoinkGUI Settings"))
+            .title(Component.nullToEmpty("YoinkGUI+ Settings"))
             .category(ConfigCategory.createBuilder()
                 .name(Component.nullToEmpty("Button settings"))
                 .tooltip(Component.nullToEmpty("Button settings"))
                 .group(OptionGroup.createBuilder()
                     .name(Component.nullToEmpty("Button Options"))
-
                     .option(booleanOption(
                         name = "Enable Yoink Button",
                         field = yoinkGuiSettings.enableYoinkButton,
@@ -40,7 +41,7 @@ class ModMenuIntegration : ModMenuApi {
                         name = "Enable Single Item Yoink",
                         field = yoinkGuiSettings.enableSingleItemYoink,
                         defaultValue = true,
-                        description = "Allows yoinking single items when pressing X while hovering."
+                        description = "Allows yoinking single items when pressing Y while hovering."
                     ))
                     .build())
                 .build())
@@ -65,7 +66,7 @@ class ModMenuIntegration : ModMenuApi {
                     ))
                     .build())
                 .group(OptionGroup.createBuilder()
-                    .name(Component.nullToEmpty("Nbt Parser Options"))
+                    .name(Component.nullToEmpty("NBT Parser Options"))
                     .option(booleanOption(
                         name = "Include Raw NBT",
                         field = yoinkGuiSettings.includeRawNbt,
@@ -97,11 +98,49 @@ class ModMenuIntegration : ModMenuApi {
                         description = "Toggles gradient parsing in NBT text. <gradient:#FF0000:#00FF00:#0000FF>"
                     ))
                     .build())
+                .group(OptionGroup.createBuilder()
+                    .name(Component.nullToEmpty("Output Options"))
+                    .option(booleanOption(
+                        name = "Click Opens File",
+                        field = yoinkGuiSettings.clickOpensFile,
+                        defaultValue = true,
+                        description = "When enabled, clicking the file path in chat opens the file directly. When disabled, clicking copies the path to clipboard."
+                    ))
+                    .build())
+                .group(OptionGroup.createBuilder()
+                    .name(Component.nullToEmpty("Lore Raw Output"))
+                    .option(booleanOption(
+                        name = "Show Raw Lore",
+                        field = yoinkGuiSettings.loreShowRaw,
+                        defaultValue = true,
+                        description = "Outputs raw per-segment color+style strings for lore lines (e.g. #65EFEB&lS#71F2E3&lt...)."
+                    ))
+                    .option(enumOptionString(
+                        name = "Raw Lore Mode",
+                        field = yoinkGuiSettings.loreRawMode,
+                        enumClass = LoreRawMode::class.java,
+                        defaultValue = LoreRawMode.RAW_ONLY
+                    ))
+                    .build())
+                .group(OptionGroup.createBuilder()
+                    .name(Component.nullToEmpty("Slot Display Options"))
+                    .option(enumOptionString(
+                        name = "Slot Header Format",
+                        field = yoinkGuiSettings.slotFormat,
+                        enumClass = SlotFormat::class.java,
+                        defaultValue = SlotFormat.ITEM_AND_SLOT
+                    ))
+                    .option(booleanOption(
+                        name = "Show Slot Labels",
+                        field = yoinkGuiSettings.slotShowLabels,
+                        defaultValue = true,
+                        description = "Shows human-readable labels for named slots (e.g. Slot: 98 (Mainhand)). Unnamed slots always show only their number."
+                    ))
+                    .build())
                 .build())
 
             .build()
             .generateScreen(parentScreen)
         return screen
     }
-
 }
