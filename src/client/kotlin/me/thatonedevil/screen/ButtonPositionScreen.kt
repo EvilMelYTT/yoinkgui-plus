@@ -23,36 +23,21 @@ class ButtonPositionScreen(parent: Screen?) : VersionedScreen("Position Yoink Bu
 
     private var buttonX: Int
         get() = config.buttonX.get()
-        set(value) {
-            config.buttonX.set(value)
-        }
+        set(value) { config.buttonX.set(value) }
 
     private var buttonY: Int
         get() = config.buttonY.get()
-        set(value) {
-            config.buttonY.set(value)
-        }
+        set(value) { config.buttonY.set(value) }
 
     private var scaleFactor: Float
         get() = config.buttonScaleFactor.get()
-        set(value) {
-            config.buttonScaleFactor.set(value)
-        }
+        set(value) { config.buttonScaleFactor.set(value) }
 
-    private val scaledButtonWidth: Int
-        get() = (baseButtonWidth * scaleFactor).toInt()
-
-    private val scaledButtonHeight: Int
-        get() = (baseButtonHeight * scaleFactor).toInt()
+    private val scaledButtonWidth: Int get() = (baseButtonWidth * scaleFactor).toInt()
+    private val scaledButtonHeight: Int get() = (baseButtonHeight * scaleFactor).toInt()
 
     override fun render(context: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)
-
-        //? if <1.21.9 {
-        /*if (clientWindow == null) {
-            println("Client window is null, cannot process input")
-            return
-        }*///? }
 
         val isMousePressed = GLFW.glfwGetMouseButton(clientWindow, GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS
         if (isMousePressed && !wasMousePressed) {
@@ -64,64 +49,27 @@ class ButtonPositionScreen(parent: Screen?) : VersionedScreen("Position Yoink Bu
         } else if (!isMousePressed && wasMousePressed) {
             dragging = false
         }
-
         wasMousePressed = isMousePressed
 
-        // Handle dragging
         if (dragging) {
             buttonX = (mouseX - dragOffsetX).coerceIn(0, width - scaledButtonWidth)
             buttonY = (mouseY - dragOffsetY).coerceIn(0, height - scaledButtonHeight)
         }
 
         val buttonColor = if (isMouseOverButton(mouseX, mouseY)) 0xAA444444.toInt() else 0xAA000000.toInt()
-        context.fill(
-            buttonX,
-            buttonY,
-            buttonX + scaledButtonWidth,
-            buttonY + scaledButtonHeight,
-            buttonColor
-        )
-        context.drawCenteredString(
-            font,
-            Component.literal("Yoink and Parse NBT into file"),
-            buttonX + scaledButtonWidth / 2,
-            buttonY + (scaledButtonHeight - 8) / 2,
-            0xFFFFFFFF.toInt()
-        )
+        context.fill(buttonX, buttonY, buttonX + scaledButtonWidth, buttonY + scaledButtonHeight, buttonColor)
+        context.drawCenteredString(font, "Yoink and Parse NBT into file",
+            buttonX + scaledButtonWidth / 2, buttonY + (scaledButtonHeight - 8) / 2, 0xFFFFFFFF.toInt())
 
-        context.drawCenteredString(
-            font,
-            Component.literal("Drag the button to reposition it"),
-            width / 2,
-            20,
-            0xFFFFFFFF.toInt()
-        )
-
-        context.drawCenteredString(
-            font,
-            Component.literal("Use mouse wheel to scale (Current: ${"%.2f".format(scaleFactor)}x)"),
-            width / 2,
-            35,
-            0xFFFFFFFF.toInt()
-        )
-
-        context.drawCenteredString(
-            font,
-            Component.literal("Press ESC or ENTER to save and exit"),
-            width / 2,
-            50,
-            0xFFFFFFFF.toInt()
-        )
-
+        context.drawCenteredString(font, "Drag the button to reposition it", width / 2, 20, 0xFFFFFFFF.toInt())
+        context.drawCenteredString(font, "Use mouse wheel to scale (Current: ${"%.2f".format(scaleFactor)}x)", width / 2, 35, 0xFFFFFFFF.toInt())
+        context.drawCenteredString(font, "Press ESC or ENTER to save and exit", width / 2, 50, 0xFFFFFFFF.toInt())
     }
 
     override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
-        val delta = verticalAmount.toFloat() * 0.1f
-        scaleFactor = (scaleFactor + delta).coerceIn(0.1f, 2.0f)
-
+        scaleFactor = (scaleFactor + verticalAmount.toFloat() * 0.1f).coerceIn(0.1f, 2.0f)
         buttonX = buttonX.coerceIn(0, width - scaledButtonWidth)
         buttonY = buttonY.coerceIn(0, height - scaledButtonHeight)
-
         return true
     }
 
@@ -130,10 +78,7 @@ class ButtonPositionScreen(parent: Screen?) : VersionedScreen("Position Yoink Bu
         YoinkGuiSettings.saveToFile()
     }
 
-    private fun isMouseOverButton(mouseX: Int, mouseY: Int): Boolean {
-        return mouseX >= buttonX && mouseX <= buttonX + scaledButtonWidth &&
-               mouseY >= buttonY && mouseY <= buttonY + scaledButtonHeight
-    }
-
+    private fun isMouseOverButton(mouseX: Int, mouseY: Int): Boolean =
+        mouseX >= buttonX && mouseX <= buttonX + scaledButtonWidth &&
+        mouseY >= buttonY && mouseY <= buttonY + scaledButtonHeight
 }
-
