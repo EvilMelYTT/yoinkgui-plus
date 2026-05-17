@@ -10,7 +10,7 @@ Built with `.\gradlew stonecutterSwitchTo1.21.11` and `.\gradlew :1.21.11:build 
 [![Download on CurseForge](https://raw.githubusercontent.com/intergrav/devins-badges/c7fd18efdadd1c3f12ae56b49afd834640d2d797/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/yoinkgui)
 [![fapi-badge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-api_vector.svg)](https://modrinth.com/mod/fabric-api)
 [![kotlin-badge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-language-kotlin_vector.svg)](https://modrinth.com/mod/fabric-language-kotlin)
-[![modmenu-badge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/modmenu_vector.svg)](https://modrinth.com/mod/modmenu)
+[![modmenu-badge](https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/requires/mod-menu_vector.svg)](https://modrinth.com/mod/modmenu)
 [![sinytra-connector](https://raw.githubusercontent.com/Sinytra/.github/refs/heads/main/badges/connector/cozy.svg)](https://modrinth.com/mod/connector)
 
 [![Build Status](https://github.com/ThatOneDevil/yoinkgui/actions/workflows/build.yml/badge.svg)](https://github.com/ThatOneDevil/yoinkgui)
